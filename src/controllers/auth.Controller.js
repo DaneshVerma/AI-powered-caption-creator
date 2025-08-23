@@ -12,8 +12,8 @@ const registerController = async (req, res) => {
 
   try {
     const newUser = await userModel.create({
-      username,
-      password,
+      username: username,
+      password: password,
     });
     const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET);
     res.cookie("token", token);
@@ -35,14 +35,14 @@ const loginController = async (req, res) => {
       message: "invalid credentials",
     });
   }
-  const user = userModel.findOne({ username: username });
+  const user = await userModel.findOne({ username: username });
   if (!user) {
     return res.status(404).json({
       message: "user does not exist Register First!",
     });
   }
-  const isPasswordValid = user.password == password;
-  if (!password) {
+  const isPasswordValid = user.comparePassword(password);
+  if (!isPasswordValid) {
     return res.status(401).json({
       message: "username or password is incorrect",
     });
