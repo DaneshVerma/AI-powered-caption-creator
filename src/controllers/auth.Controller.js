@@ -41,7 +41,7 @@ const loginController = async (req, res) => {
       message: "user does not exist Register First!",
     });
   }
-  const isPasswordValid = user.comparePassword(password);
+  const isPasswordValid = await user.comparePassword(password);
   if (!isPasswordValid) {
     return res.status(401).json({
       message: "username or password is incorrect",
