@@ -4,7 +4,18 @@ const { config } = require("dotenv");
 // The client gets the API key from the environment variable `GEMINI_API_KEY`.
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
-async function generateCaption(base64ImageFile, options = {}) {
+async function generateCaption(imageData, options = {}) {
+  // Check if the input is a Buffer and convert it to a base64 string.
+  // The API expects this format for image data.
+  if (!Buffer.isBuffer(imageData)) {
+    console.error(
+      "Expected a Buffer for image data but received a different type."
+    );
+    return "Error generating caption.";
+  }
+
+  const base64Image = imageData.toString("base64");
+
   const {
     language = "English",
     mood = "friendly",
@@ -12,10 +23,14 @@ async function generateCaption(base64ImageFile, options = {}) {
     emojis = false,
     hashtags = false,
   } = options;
+
   const contents = [
     {
-      mimeType: "image/jpeg",
-      data: base64ImageFile,
+      // Use the 'inlineData' property to specify the data and mime type.
+      inlineData: {
+        mimeType: "image/jpeg",
+        data: base64Image, // This must be a base64-encoded string.
+      },
     },
     {
       text: `
@@ -30,26 +45,33 @@ async function generateCaption(base64ImageFile, options = {}) {
     },
   ];
 
-  const response = await ai.models.generateContent({
-    model: "gemini-2.5-flash",
-    contents: contents,
-    config: {
-      systemInstruction: `
-      You are an expert in generating creative captions for images.
-      Always generate one concise caption describing the image accurately.
-      
-      The style must follow user preferences:
-      - Language choice
-      - Mood
-      - Tone
-      - Emoji inclusion
-      - Hashtag inclusion
-      
-      If preferences are missing, default to short, simple, and friendly captions in English without emojis or hashtags.
-      `,
-    },
-  });
-  return response.text;
+  try {
+    const response = await ai.models.generateContent({
+      model: "gemini-1.5-flash",
+      contents: contents,
+      config: {
+        systemInstruction: `
+ You are an expert in generating creative captions for images.
+Always generate one concise caption describing the image accurately.
+The style must follow user preferences:
+- Language choice
+- Mood
+- Tone
+- Emoji inclusion
+- Hashtag inclusion
+If preferences are missing, default to short, simple, and friendly captions in English without emojis or hashtags.
+`,
+      },
+    });
+    return response.text;
+  } catch (error) {
+    console.error(
+      "Error calling Gemini API:",
+      error.response?.data?.error || error.message
+    );
+    // You can return a default or helpful message here.
+    return "Failed to generate caption for the image.";
+  }
 }
 
 module.exports = generateCaption;
