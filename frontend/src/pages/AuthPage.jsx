@@ -34,7 +34,7 @@ export default function AuthPage() {
   };
 
   return (
-    <main className='min-h-[calc(100vh-56px)] grid place-items-center bg-gray-50 px-4'>
+    <main className='min-h-[calc(90vh-56px)] grid place-items-center bg-gray-50 px-4'>
       <div className='w-full max-w-md'>
         <div className='rounded-2xl bg-white shadow-sm border p-6'>
           <h1 className='text-2xl font-semibold mb-1'>
