@@ -88,7 +88,7 @@ export default function UsePage() {
             <button
               onClick={uploadAndCaption}
               disabled={!file || busy}
-              className='mt-4 w-full disabled:cursor-not-allowed rounded-xl bg-gray-900 text-white py-2.5 hover:opacity-90 disabled:opacity-50'
+              className='mt-4 w-full cursor-pointer disabled:cursor-not-allowed rounded-xl bg-gray-900 text-white py-2.5 hover:opacity-90 disabled:opacity-50'
             >
               {busy ? "Generating..." : "Upload & Generate Caption"}
             </button>
