@@ -6,7 +6,16 @@ async function createPostController(req, res) {
   const file = req.file;
   console.log(file);
   const b64image = new Buffer.from(file.buffer).toString("base64");
-  const caption = await generateCaption(b64image);
+  // Extract user options from request body
+  const { language, mood, tone, emojis, hashtags } = req.body;
+  // Call AI service with preferences
+  const caption = await generateCaption(b64image, {
+    language,
+    mood,
+    tone,
+    emojis: emojis === "true" || emojis === true,
+    hashtags: hashtags === "true" || hashtags === true,
+  });
   const result = await uploadFile(file);
   res.json({
     caption: caption,
