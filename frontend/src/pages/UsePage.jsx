@@ -1,5 +1,6 @@
 import { useState, useMemo } from "react";
 import api from "../config/api";
+import ResultCard from "../components/ResultCard";
 
 export default function UsePage() {
   const [file, setFile] = useState(null);
@@ -7,10 +8,7 @@ export default function UsePage() {
   const [result, setResult] = useState(null); // { caption, image }
   const [error, setError] = useState(null);
 
-  const previewUrl = useMemo(
-    () => (file ? URL.createObjectURL(file) : null),
-    [file]
-  );
+
 
   const onFile = (e) => {
     const f = e.target.files?.[0];
@@ -31,6 +29,7 @@ export default function UsePage() {
       const { data } = await api.post("/api", fd, {
         headers: { "Content-Type": "multipart/form-data" },
       });
+      setFile(null)
       setResult(data);
     } catch (err) {
       const message =
@@ -62,12 +61,22 @@ export default function UsePage() {
             </div>
 
             <label className='flex flex-col items-center justify-center w-full h-40 border-2 border-dashed rounded-xl cursor-pointer hover:bg-gray-50'>
-              <div className='flex flex-col items-center justify-center'>
-                <span className='text-sm text-gray-600'>
-                  {file ? "Change image" : "Click to upload or drag & drop"}
-                </span>
-                <span className='text-xs text-gray-500'>PNG, JPG or JPEG</span>
-              </div>
+              {file ? (
+                <img
+                  src={URL.createObjectURL(file)} // ✅ directly show selected file locally
+                  alt='Selected Preview'
+                  className='object-contain max-h-40'
+                />
+              ) : (
+                <div className='flex flex-col items-center justify-center'>
+                  <span className='text-sm text-gray-600'>
+                    Click to upload or drag & drop
+                  </span>
+                  <span className='text-xs text-gray-500'>
+                    PNG, JPG or JPEG
+                  </span>
+                </div>
+              )}
               <input
                 type='file'
                 accept='image/*'
@@ -76,21 +85,10 @@ export default function UsePage() {
               />
             </label>
 
-            {previewUrl && (
-              <div className='mt-4'>
-                <p className='text-sm text-gray-600 mb-2'>Preview</p>
-                <img
-                  src={previewUrl}
-                  alt='Preview'
-                  className='w-full h-64 object-contain rounded-xl border bg-gray-50'
-                />
-              </div>
-            )}
-
             <button
               onClick={uploadAndCaption}
               disabled={!file || busy}
-              className='mt-4 w-full rounded-xl bg-gray-900 text-white py-2.5 hover:opacity-90 disabled:opacity-50'
+              className='mt-4 w-full disabled:cursor-not-allowed rounded-xl bg-gray-900 text-white py-2.5 hover:opacity-90 disabled:opacity-50'
             >
               {busy ? "Generating..." : "Upload & Generate Caption"}
             </button>
@@ -103,32 +101,7 @@ export default function UsePage() {
           </section>
 
           {/* Result card */}
-          <section className='rounded-2xl border bg-white shadow-sm p-5'>
-            <h3 className='font-medium mb-3'>Result</h3>
-
-            {!result && (
-              <div className='text-sm text-gray-600'>
-                Caption and hosted image will appear here after processing.
-              </div>
-            )}
-
-            {result && (
-              <div className='space-y-4'>
-                <figure className='rounded-xl border bg-gray-50 p-2'>
-                  <img
-                    src={result.image}
-                    alt='Uploaded'
-                    className='w-full max-h-[360px] object-contain rounded-lg'
-                  />
-                </figure>
-                <div className='rounded-xl border bg-gray-50 px-3 py-2'>
-                  <p className='text-sm text-gray-800 leading-relaxed'>
-                    {result.caption}
-                  </p>
-                </div>
-              </div>
-            )}
-          </section>
+          <ResultCard result={result} />
         </div>
       </div>
     </main>

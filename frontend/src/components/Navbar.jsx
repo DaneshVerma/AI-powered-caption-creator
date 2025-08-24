@@ -32,15 +32,9 @@ export default function Navbar() {
         <div className='flex items-center gap-3'>
           {authed ? (
             <>
-              <Link
-                to='/use'
-                className='hidden sm:inline-flex rounded-xl px-3 py-2 text-sm border hover:bg-gray-50'
-              >
-                Use App
-              </Link>
               <button
                 onClick={handleLogout}
-                className='rounded-xl px-3 py-2 text-sm bg-gray-900 text-white hover:opacity-90'
+                className='rounded-xl cursor-pointer px-3 py-2 text-sm bg-gray-900 text-white hover:opacity-90'
               >
                 Logout
               </button>

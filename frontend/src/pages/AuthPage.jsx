@@ -78,7 +78,7 @@ export default function AuthPage() {
             </div>
 
             {msg && (
-              <div className='rounded-xl border bg-gray-50 px-3 py-2 text-sm text-gray-700'>
+              <div className='border-b capitalize bg-gray-50 px-3 py-2 text-sm text-red-700'>
                 {msg}
               </div>
             )}
@@ -86,7 +86,7 @@ export default function AuthPage() {
             <button
               type='submit'
               disabled={loading}
-              className='w-full rounded-xl bg-gray-900 text-white py-2.5 hover:opacity-90 disabled:opacity-50'
+              className='w-full cursor-pointer   rounded-xl bg-gray-900 text-white py-2.5 hover:opacity-90 disabled:opacity-50'
             >
               {loading
                 ? "Please wait..."
@@ -102,7 +102,7 @@ export default function AuthPage() {
                 Don’t have an account?{" "}
                 <button
                   onClick={() => setMode("register")}
-                  className='underline underline-offset-4'
+                  className='underline cursor-pointer underline-offset-4'
                 >
                   Register
                 </button>
@@ -112,7 +112,7 @@ export default function AuthPage() {
                 Already have an account?{" "}
                 <button
                   onClick={() => setMode("login")}
-                  className='underline underline-offset-4'
+                  className='underline cursor-pointer underline-offset-4'
                 >
                   Login
                 </button>
