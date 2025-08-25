@@ -6,7 +6,7 @@ import Navbar from "./components/Navbar";
 
 const App = () => {
   return (
-    <>
+    <div className="select-none">
       <Navbar />
       <Routes>
         <Route path='/' element={<AuthPage />} />
@@ -27,7 +27,7 @@ const App = () => {
           &copy; [<i>Danesh</i>]
         </Link>
       </footer>
-    </>
+    </div>
   );
 };
 

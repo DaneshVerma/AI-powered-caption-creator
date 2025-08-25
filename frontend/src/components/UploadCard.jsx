@@ -51,10 +51,16 @@ const UploadCard = ({
             }
             className='w-full rounded-lg border px-2 py-1 cursor-pointer'
           >
+            <option value='Hinglish'>Hinglish</option>
             <option value='English'>English</option>
             <option value='Hindi'>Hindi</option>
-            <option value='Spanish'>Spanish</option>
-            <option value='French'>French</option>
+            <option value='Urdu'>Urdu</option>
+            <option value='Punjabi'>Punjabi</option>
+            <option value='Bangla'>Bangla</option>
+            <option value='Tamil'>Tamil</option>
+            <option value='Telugu'>Telugu</option>
+            <option value='Gujarati'>Gujarati</option>
+            <option value='Marathi'>Marathi</option>
           </select>
         </div>
 
@@ -68,10 +74,16 @@ const UploadCard = ({
             }
             className='w-full rounded-lg border px-2 py-1 cursor-pointer'
           >
-            <option value='friendly'>Friendly</option>
-            <option value='professional'>Professional</option>
-            <option value='funny'>Funny</option>
-            <option value='motivational'>Motivational</option>
+            <option value='casual'>Casual</option>
+            <option value='sarcastic'>Sarcastic</option>
+            <option value='romantic'>Romantic</option>
+            <option value='inspirational'>Inspirational</option>
+            <option value='trending'>Trending</option>
+            <option value='emotional'>Emotional</option>
+            <option value='aesthetic'>Aesthetic</option>
+            <option value='witty'>Witty</option>
+            <option value='storytelling'>Storytelling</option>
+            <option value='informative'>Informative</option>
           </select>
         </div>
 
@@ -85,10 +97,16 @@ const UploadCard = ({
             }
             className='w-full rounded-lg border px-2 py-1 cursor-pointer'
           >
-            <option value='engaging'>Engaging</option>
+            <option value='friendly'>Friendly</option>
+            <option value='professional'>Professional</option>
+            <option value='formal'>Formal</option>
             <option value='casual'>Casual</option>
+            <option value='engaging'>Engaging</option>
             <option value='serious'>Serious</option>
-            <option value='inspirational'>Inspirational</option>
+            <option value='polite'>Polite</option>
+            <option value='direct'>Direct</option>
+            <option value='authoritative'>Authoritative</option>
+            <option value='optimistic'>Optimistic</option>
           </select>
         </div>
 

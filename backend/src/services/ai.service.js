@@ -5,7 +5,7 @@ const { config } = require("dotenv");
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
 async function generateCaption(imageData, options = {}) {
-  // Check if the input is a Buffer and convert it to a base64 string.
+  // Checking if the input is a Buffer and convert it to a base64 string.
   // The API expects this format for image data.
   if (!Buffer.isBuffer(imageData)) {
     console.error(
@@ -26,10 +26,9 @@ async function generateCaption(imageData, options = {}) {
 
   const contents = [
     {
-      // Use the 'inlineData' property to specify the data and mime type.
       inlineData: {
         mimeType: "image/jpeg",
-        data: base64Image, // This must be a base64-encoded string.
+        data: base64Image, // a base64-encoded string.
       },
     },
     {
@@ -69,7 +68,6 @@ If preferences are missing, default to short, simple, and friendly captions in E
       "Error calling Gemini API:",
       error.response?.data?.error || error.message
     );
-    // You can return a default or helpful message here.
     return "Failed to generate caption for the image.";
   }
 }
