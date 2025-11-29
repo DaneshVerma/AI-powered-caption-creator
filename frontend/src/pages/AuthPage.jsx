@@ -4,7 +4,7 @@ import { useNavigate } from "react-router";
 
 export default function AuthPage() {
   const [mode, setMode] = useState("login"); // 'login' | 'register'
-  const [form, setForm] = useState({ username: "", password: "" });
+  const [form, setForm] = useState({ username: "", email: "", password: "" });
   const [loading, setLoading] = useState(false);
   const [msg, setMsg] = useState(null);
   const navigate = useNavigate();
@@ -61,6 +61,21 @@ export default function AuthPage() {
                 required
               />
             </div>
+            {mode === "register" && (
+              <div>
+                <label className='block text-sm mb-1'>Email</label>
+                <input
+                  type='email'
+                  name='email'
+                  value={form.email}
+                  onChange={onChange}
+                  placeholder='jane@example.com'
+                  className='w-full rounded-xl border px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gray-900/10'
+                  autoComplete='email'
+                  required
+                />
+              </div>
+            )}
             <div>
               <label className='block text-sm mb-1'>Password</label>
               <input

@@ -2,7 +2,7 @@ const userModel = require("../models/user.model");
 const jwt = require("jsonwebtoken");
 
 const registerController = async (req, res) => {
-  const { username, password } = req.body;
+  const { username, email, password } = req.body;
   const existingUser = await userModel.findOne({ username: username });
 
   if (existingUser)
@@ -13,6 +13,7 @@ const registerController = async (req, res) => {
   try {
     const newUser = await userModel.create({
       username: username,
+      email: email,
       password: password,
     });
     const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET);
