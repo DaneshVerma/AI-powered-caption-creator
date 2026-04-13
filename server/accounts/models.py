@@ -2,7 +2,9 @@
 Custom User model — mirrors the existing Mongoose schema:
   • username  (unique, required)
   • email     (unique but nullable — Mongoose sparse index)
-  • password  (hashed with bcrypt)
+  • password  (hashed with bcrypt, nullable for Google OAuth users)
+  • google_id (for Google OAuth linked accounts)
+  • avatar_url (Google profile picture)
 """
 
 from django.db import models
@@ -12,7 +14,9 @@ import bcrypt
 class User(models.Model):
     username = models.CharField(max_length=150, unique=True)
     email = models.EmailField(unique=True, null=True, blank=True, default=None)
-    password = models.CharField(max_length=128)
+    password = models.CharField(max_length=128, null=True, blank=True)
+    google_id = models.CharField(max_length=255, null=True, blank=True, unique=True)
+    avatar_url = models.URLField(max_length=500, null=True, blank=True)
 
     class Meta:
         db_table = "users"
@@ -27,6 +31,8 @@ class User(models.Model):
 
     def check_password(self, raw_password: str) -> bool:
         """Return True if *raw_password* matches the stored hash."""
+        if not self.password:
+            return False
         return bcrypt.checkpw(
             raw_password.encode("utf-8"),
             self.password.encode("utf-8"),
@@ -38,7 +44,7 @@ class User(models.Model):
             "_id": str(self.pk),
             "username": self.username,
             "email": self.email or "",
-            "password": self.password,      # Express returns the hash too
+            "avatar_url": self.avatar_url or "",
         }
 
     def __str__(self):

@@ -1,4 +1,4 @@
-import React from "react";
+import { FiUpload, FiImage, FiVideo, FiZap } from "react-icons/fi";
 
 const UploadCard = ({
   uploadAndCaption,
@@ -9,47 +9,86 @@ const UploadCard = ({
   options,
   setOptions,
 }) => {
+  const isVideo = file?.type?.startsWith("video/");
+
   return (
-    <section className='rounded-2xl border bg-white shadow-sm p-5'>
-      <div className='flex items-start justify-between mb-3'>
-        <h3 className='font-medium'>Upload Image</h3>
+    <section className='neo-card p-5'>
+      {/* Header */}
+      <div className='flex items-center justify-between mb-4'>
+        <h3 className='font-heading font-bold text-lg flex items-center gap-2'>
+          <FiUpload size={18} />
+          Upload Media
+        </h3>
+        {file && (
+          <span
+            className={`neo-badge ${
+              isVideo ? "bg-neo-blue" : "bg-neo-peach"
+            } text-neo-black`}
+          >
+            {isVideo ? (
+              <span className='flex items-center gap-1'>
+                <FiVideo size={12} /> Video
+              </span>
+            ) : (
+              <span className='flex items-center gap-1'>
+                <FiImage size={12} /> Image
+              </span>
+            )}
+          </span>
+        )}
       </div>
 
-      {/* File upload */}
-      <label className='flex flex-col items-center justify-center w-full h-40 border-2 border-dashed rounded-xl cursor-pointer hover:bg-gray-50'>
+      {/* File upload zone */}
+      <label className='neo-upload-zone flex flex-col items-center justify-center w-full h-44 cursor-pointer overflow-hidden'>
         {file ? (
-          <img
-            src={URL.createObjectURL(file)}
-            alt='Selected Preview'
-            className='object-contain max-h-40'
-          />
+          isVideo ? (
+            <video
+              src={URL.createObjectURL(file)}
+              className='object-contain max-h-44 rounded-xl'
+              muted
+              playsInline
+            />
+          ) : (
+            <img
+              src={URL.createObjectURL(file)}
+              alt='Selected Preview'
+              className='object-contain max-h-44 rounded-xl'
+            />
+          )
         ) : (
-          <div className='flex flex-col items-center justify-center'>
-            <span className='text-sm text-gray-600'>
+          <div className='flex flex-col items-center justify-center text-center px-4'>
+            <div className='w-12 h-12 bg-neo-yellow border-[2.5px] border-neo-black rounded-xl flex items-center justify-center mb-3'>
+              <FiUpload size={20} />
+            </div>
+            <span className='text-sm font-heading font-semibold text-neo-black'>
               Click to upload or drag & drop
             </span>
-            <span className='text-xs text-gray-500'>PNG, JPG or JPEG</span>
+            <span className='text-xs text-neo-black/50 font-body mt-1'>
+              PNG, JPG, WebP, GIF, MP4, WebM, MOV
+            </span>
           </div>
         )}
         <input
           type='file'
-          accept='image/*'
+          accept='image/*,video/*'
           onChange={onFile}
           className='hidden'
         />
       </label>
 
       {/* Options */}
-      <div className='mt-4 space-y-3'>
+      <div className='mt-5 space-y-3'>
         {/* Language */}
         <div>
-          <label className='text-sm font-medium block mb-1'>Language</label>
+          <label className='text-sm font-heading font-semibold block mb-1.5'>
+            Language
+          </label>
           <select
             value={options.language}
             onChange={(e) =>
               setOptions((prev) => ({ ...prev, language: e.target.value }))
             }
-            className='w-full rounded-lg border px-2 py-1 cursor-pointer'
+            className='neo-select'
           >
             <option value='Hinglish'>Hinglish</option>
             <option value='English'>English</option>
@@ -66,13 +105,15 @@ const UploadCard = ({
 
         {/* Mood */}
         <div>
-          <label className='text-sm font-medium block mb-1'>Mood</label>
+          <label className='text-sm font-heading font-semibold block mb-1.5'>
+            Mood
+          </label>
           <select
             value={options.mood}
             onChange={(e) =>
               setOptions((prev) => ({ ...prev, mood: e.target.value }))
             }
-            className='w-full rounded-lg border px-2 py-1 cursor-pointer'
+            className='neo-select'
           >
             <option value='casual'>Casual</option>
             <option value='sarcastic'>Sarcastic</option>
@@ -89,13 +130,15 @@ const UploadCard = ({
 
         {/* Tone */}
         <div>
-          <label className='text-sm font-medium block mb-1'>Tone</label>
+          <label className='text-sm font-heading font-semibold block mb-1.5'>
+            Tone
+          </label>
           <select
             value={options.tone}
             onChange={(e) =>
               setOptions((prev) => ({ ...prev, tone: e.target.value }))
             }
-            className='w-full rounded-lg border px-2 py-1 cursor-pointer'
+            className='neo-select'
           >
             <option value='friendly'>Friendly</option>
             <option value='professional'>Professional</option>
@@ -111,29 +154,29 @@ const UploadCard = ({
         </div>
 
         {/* Toggles */}
-        <div className='flex items-center space-x-4'>
-          <label className='flex items-center space-x-2 cursor-pointer'>
+        <div className='flex items-center gap-5 pt-1'>
+          <label className='flex items-center gap-2 cursor-pointer'>
             <input
               type='checkbox'
               checked={options.emojis}
               onChange={(e) =>
                 setOptions((prev) => ({ ...prev, emojis: e.target.checked }))
               }
-              className='cursor-pointer'
+              className='neo-checkbox'
             />
-            <span>Include Emojis</span>
+            <span className='text-sm font-heading font-medium'>Emojis</span>
           </label>
 
-          <label className='flex items-center space-x-2 cursor-pointer'>
+          <label className='flex items-center gap-2 cursor-pointer'>
             <input
               type='checkbox'
               checked={options.hashtags}
               onChange={(e) =>
                 setOptions((prev) => ({ ...prev, hashtags: e.target.checked }))
               }
-              className='cursor-pointer'
+              className='neo-checkbox'
             />
-            <span>Include Hashtags</span>
+            <span className='text-sm font-heading font-medium'>Hashtags</span>
           </label>
         </div>
       </div>
@@ -142,14 +185,24 @@ const UploadCard = ({
       <button
         onClick={uploadAndCaption}
         disabled={!file || busy}
-        className='mt-4 w-full cursor-pointer disabled:cursor-not-allowed rounded-xl bg-gray-900 text-white py-2.5 hover:opacity-90 disabled:opacity-50'
+        className='neo-btn neo-btn-primary w-full mt-5 flex items-center justify-center gap-2'
       >
-        {busy ? "Generating..." : "Upload & Generate Caption"}
+        {busy ? (
+          <>
+            <span className='inline-block w-4 h-4 border-2 border-neo-black border-t-transparent rounded-full animate-spin' />
+            Generating...
+          </>
+        ) : (
+          <>
+            <FiZap size={16} />
+            Generate Caption
+          </>
+        )}
       </button>
 
       {/* Error */}
       {error && (
-        <div className='mt-3 rounded-xl border bg-red-50 px-3 py-2 text-sm text-red-700'>
+        <div className='mt-3 neo-badge bg-neo-red/15 text-neo-red text-sm w-full text-center py-2'>
           {error}
         </div>
       )}

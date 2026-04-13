@@ -38,8 +38,6 @@ MIDDLEWARE = [
 ]
 
 # ── CORS ───────────────────────────────────────────────
-# In production the SPA is served from the same origin, so CORS is not
-# strictly needed.  For local Vite dev-server (port 5173) we allow it.
 CORS_ALLOW_ALL_ORIGINS = DEBUG
 CORS_ALLOW_CREDENTIALS = True
 
@@ -80,9 +78,15 @@ JWT_SECRET = os.getenv("JWT_SECRET", "fallback-jwt-secret")
 # ── Gemini AI ──────────────────────────────────────────
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "")
 
+# ── Cloudinary ─────────────────────────────────────────
+CLOUDINARY_CLOUD_NAME = os.getenv("CLOUDINARY_CLOUD_NAME", "")
+CLOUDINARY_API_KEY = os.getenv("CLOUDINARY_API_KEY", "")
+CLOUDINARY_API_SECRET = os.getenv("CLOUDINARY_API_SECRET", "")
+
+# ── Google OAuth ───────────────────────────────────────
+GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID", "")
+
 # ── Static files & SPA ────────────────────────────────
-# The pre-built Vite frontend lives in  backend/public/  (repo-level).
-# We also copy / symlink it so Django's staticfiles can serve the assets.
 SPA_ROOT = PROJECT_ROOT / "backend" / "public"
 
 STATIC_URL = "/assets/"

@@ -1,0 +1,278 @@
+@import "tailwindcss";
+
+/* ══════════════════════════════════════════════════════
+   NEOBRUTALISM DESIGN SYSTEM — Captionair
+   
+   Characteristics:
+   • Thick black borders (2–3px)
+   • Hard offset shadows (no blur)
+   • Vivid flat colours
+   • Bold typography (Space Grotesk)
+   • Raw, hand-crafted feel
+   ══════════════════════════════════════════════════════ */
+
+@theme {
+  --color-neo-black: #1a1a1a;
+  --color-neo-white: #fafaf8;
+  --color-neo-yellow: #FFE156;
+  --color-neo-pink: #FF6B9D;
+  --color-neo-cyan: #4ECDC4;
+  --color-neo-lime: #C7F464;
+  --color-neo-lavender: #B8A9E8;
+  --color-neo-peach: #FFB07C;
+  --color-neo-blue: #6C9BFF;
+  --color-neo-red: #FF6B6B;
+  --color-neo-cream: #FFF8E7;
+  --color-neo-gray: #E8E5E0;
+
+  --font-heading: "Space Grotesk", system-ui, sans-serif;
+  --font-body: "DM Sans", system-ui, sans-serif;
+}
+
+/* ── Base ─────────────────────────────────────────── */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--color-neo-cream);
+  color: var(--color-neo-black);
+  -webkit-font-smoothing: antialiased;
+  margin: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+/* ── Neobrutalism Card ────────────────────────────── */
+.neo-card {
+  background: var(--color-neo-white);
+  border: 2.5px solid var(--color-neo-black);
+  border-radius: 16px;
+  box-shadow: 5px 5px 0px var(--color-neo-black);
+  transition: box-shadow 0.15s ease, transform 0.15s ease;
+}
+
+.neo-card:hover {
+  box-shadow: 7px 7px 0px var(--color-neo-black);
+  transform: translate(-1px, -1px);
+}
+
+/* ── Buttons ──────────────────────────────────────── */
+.neo-btn {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  border: 2.5px solid var(--color-neo-black);
+  border-radius: 12px;
+  box-shadow: 4px 4px 0px var(--color-neo-black);
+  cursor: pointer;
+  transition: all 0.12s ease;
+  padding: 10px 20px;
+  font-size: 0.95rem;
+  letter-spacing: -0.01em;
+}
+
+.neo-btn:hover:not(:disabled) {
+  box-shadow: 2px 2px 0px var(--color-neo-black);
+  transform: translate(2px, 2px);
+}
+
+.neo-btn:active:not(:disabled) {
+  box-shadow: 0px 0px 0px var(--color-neo-black);
+  transform: translate(4px, 4px);
+}
+
+.neo-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.neo-btn-primary {
+  background-color: var(--color-neo-yellow);
+  color: var(--color-neo-black);
+}
+
+.neo-btn-dark {
+  background-color: var(--color-neo-black);
+  color: var(--color-neo-white);
+}
+
+.neo-btn-pink {
+  background-color: var(--color-neo-pink);
+  color: var(--color-neo-black);
+}
+
+.neo-btn-sm {
+  padding: 6px 14px;
+  font-size: 0.82rem;
+  border-radius: 10px;
+  box-shadow: 3px 3px 0px var(--color-neo-black);
+}
+
+.neo-btn-sm:hover:not(:disabled) {
+  box-shadow: 1px 1px 0px var(--color-neo-black);
+  transform: translate(2px, 2px);
+}
+
+/* ── Inputs ───────────────────────────────────────── */
+.neo-input {
+  font-family: var(--font-body);
+  width: 100%;
+  padding: 10px 30px;
+  border: 2.5px solid var(--color-neo-black);
+  border-radius: 12px;
+  background: var(--color-neo-white);
+  font-size: 0.95rem;
+  outline: none;
+  transition: box-shadow 0.12s ease;
+}
+
+.neo-input:focus {
+  box-shadow: 3px 3px 0px var(--color-neo-black);
+}
+
+.neo-input::placeholder {
+  color: #999;
+}
+
+/* ── Select ───────────────────────────────────────── */
+.neo-select {
+  font-family: var(--font-body);
+  width: 100%;
+  padding: 8px 12px;
+  border: 2.5px solid var(--color-neo-black);
+  border-radius: 10px;
+  background: var(--color-neo-white);
+  font-size: 0.9rem;
+  cursor: pointer;
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%231a1a1a' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 32px;
+}
+
+.neo-select:focus {
+  box-shadow: 3px 3px 0px var(--color-neo-black);
+}
+
+/* ── Checkbox (neobrutalism style) ────────────────── */
+.neo-checkbox {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2.5px solid var(--color-neo-black);
+  border-radius: 5px;
+  background: var(--color-neo-white);
+  cursor: pointer;
+  position: relative;
+  flex-shrink: 0;
+  transition: background-color 0.12s ease;
+}
+
+.neo-checkbox:checked {
+  background: var(--color-neo-yellow);
+}
+
+.neo-checkbox:checked::after {
+  content: "✓";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--color-neo-black);
+  line-height: 1;
+}
+
+/* ── Badge / Tag ──────────────────────────────────── */
+.neo-badge {
+  display: inline-block;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 0.75rem;
+  padding: 3px 10px;
+  border: 2px solid var(--color-neo-black);
+  border-radius: 8px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+/* ── Divider ──────────────────────────────────────── */
+.neo-divider {
+  border: none;
+  border-top: 2.5px solid var(--color-neo-black);
+  margin: 16px 0;
+}
+
+/* ── Upload zone ──────────────────────────────────── */
+.neo-upload-zone {
+  border: 3px dashed var(--color-neo-black);
+  border-radius: 14px;
+  background: var(--color-neo-cream);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.neo-upload-zone:hover {
+  background: var(--color-neo-yellow);
+  border-style: solid;
+}
+
+/* ── Scrollbar ────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-neo-cream);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-neo-black);
+  border-radius: 4px;
+}
+
+/* ── Google login btn override ────────────────────── */
+.google-btn-wrapper {
+  width: 100%;
+}
+
+.google-btn-wrapper > div {
+  width: 100% !important;
+}
+
+.google-btn-wrapper > div > div {
+  width: 100% !important;
+  border-radius: 12px !important;
+  border: 2.5px solid var(--color-neo-black) !important;
+  box-shadow: 4px 4px 0px var(--color-neo-black) !important;
+}
+
+/* ── Animation: subtle float ──────────────────────── */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-6px); }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* ── Responsive tweaks ────────────────────────────── */
+@media (max-width: 640px) {
+  .neo-card {
+    box-shadow: 4px 4px 0px var(--color-neo-black);
+  }
+  .neo-btn {
+    box-shadow: 3px 3px 0px var(--color-neo-black);
+  }
+}

@@ -2,11 +2,12 @@ import { useState } from "react";
 import api from "../config/api";
 import ResultCard from "../components/ResultCard";
 import UploadCard from "../components/UploadCard";
+import { FiZap } from "react-icons/fi";
 
 export default function UsePage() {
   const [file, setFile] = useState(null);
   const [busy, setBusy] = useState(false);
-  const [result, setResult] = useState(null); // { caption, image }
+  const [result, setResult] = useState(null); // { caption, media_url, media_type }
   const [error, setError] = useState(null);
 
   // caption options state
@@ -34,7 +35,7 @@ export default function UsePage() {
 
     try {
       const fd = new FormData();
-      fd.append("image", file);
+      fd.append("media", file);
 
       // attach options to FormData
       Object.entries(options).forEach(([key, value]) => {
@@ -59,17 +60,25 @@ export default function UsePage() {
   };
 
   return (
-    <main className="min-h-[calc(90vh-56px)] bg-gray-50">
-      <div className="mx-auto max-w-5xl px-4 py-8">
-        <div className="mb-6">
-          <h2 className="text-2xl font-semibold">Create a caption</h2>
-          <p className="text-gray-600">
-            Upload an image and let{" "}
-            <span className="font-medium">captionair ai</span> do the rest.
+    <main className='min-h-[calc(100vh-8rem)] bg-neo-cream'>
+      <div className='mx-auto max-w-5xl px-4 py-10'>
+        {/* Page header */}
+        <div className='mb-8'>
+          <span className='neo-badge bg-neo-cyan text-neo-black mb-3 inline-block'>
+            Create
+          </span>
+          <h2 className='text-3xl font-heading font-bold text-neo-black flex items-center gap-2'>
+            <FiZap className='text-neo-yellow' size={28} />
+            Generate a caption
+          </h2>
+          <p className='text-neo-black/60 font-body mt-1'>
+            Upload a photo or video and let{" "}
+            <span className='font-heading font-semibold'>captionair</span> do
+            its thing.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className='grid md:grid-cols-2 gap-6'>
           {/* Upload card */}
           <UploadCard
             busy={busy}
