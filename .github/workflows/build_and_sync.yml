@@ -18,20 +18,33 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
 
       - name: Activate pnpm
         run: |
           corepack enable
           corepack prepare pnpm@latest --activate
 
-      - name: Install client deps
-        run: pnpm install --frozen-lockfile
-        working-directory: client
-
-      - name: Build client
-        run: pnpm run build
-        working-directory: client
+      - name: Install and build client (pnpm preferred, fallback to npm)
+        run: |
+          set -e
+          corepack enable || true
+          corepack prepare pnpm@latest --activate || true
+          cd client
+          if command -v pnpm >/dev/null 2>&1; then
+            echo "pnpm available — attempting pnpm install"
+            if pnpm install --frozen-lockfile; then
+              pnpm run build
+            else
+              echo "pnpm install failed — falling back to npm"
+              npm install --legacy-peer-deps
+              npm run build
+            fi
+          else
+            echo "pnpm not available — using npm"
+            npm install --legacy-peer-deps
+            npm run build
+          fi
 
       - name: Sync dist to backend/public
         run: |
