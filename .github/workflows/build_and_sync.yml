@@ -1,5 +1,8 @@
 name: Build Client and Sync
 
+permissions:
+  contents: write
+
 on:
   push: # run on every push to any branch
     paths-ignore:
