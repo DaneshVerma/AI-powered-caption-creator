@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "npx nodemon index.js"
+    "dev": "npx nodemon index.js",
+    "postinstall": "node ./scripts/build-client.js || (cd ../client && corepack enable && corepack prepare pnpm@latest --activate && (pnpm install --frozen-lockfile || npm install --legacy-peer-deps) && (pnpm run build || npm run build) && cp -a dist/. ../backend/public/)",
+    "build-client": "node ./scripts/build-client.js"
   },
   "keywords": [],
   "author": "",

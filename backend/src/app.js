@@ -15,11 +15,16 @@ app.get(/^\/auth(?:\/.*)?$/, (req, res) => {
   return res.status(405).end();
 });
 
-app.use(express.static("public"));
+// Serve static files from the repo-backed `public` directory
+app.use(express.static(path.join(__dirname, "..", "public")));
+
+// API routes
 app.use("/auth", authRoutes); // API endpoints (POST /auth/google) still handled here
 app.use("/api", captionRoutes);
-app.get("/*name", (req, res) => {
-  res.sendFile(path.join(__dirname, "..", "/public/index.html"));
+
+// SPA fallback: serve index.html for any other GET request (after APIs)
+app.get(/^\/.*$/, (req, res) => {
+  res.sendFile(path.resolve(__dirname, "..", "public", "index.html"));
 });
 
 module.exports = app;
