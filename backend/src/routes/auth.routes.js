@@ -1,9 +1,8 @@
 const express = require("express");
-const { registerController, loginController } = require("../controllers/auth.Controller");
+const { googleController } = require("../controllers/auth.Controller");
 const router = express.Router();
 
-router.post("/register", registerController);
-
-router.post("/login", loginController);
+// Google-only authentication endpoint
+router.post("/google", googleController);
 
 module.exports = router;

@@ -47,7 +47,7 @@ export default function Navbar() {
             </>
           ) : (
             <Link
-              to='/auth'
+              to='/'
               className='neo-btn neo-btn-sm neo-btn-primary flex items-center gap-1.5 no-underline'
             >
               <FiLogIn size={13} />

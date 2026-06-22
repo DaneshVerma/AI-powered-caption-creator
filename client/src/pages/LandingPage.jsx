@@ -1,9 +1,29 @@
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import Cookies from "js-cookie";
+import { GoogleLogin } from "@react-oauth/google";
+import api from "../config/api";
 import { FiUpload, FiZap, FiImage, FiVideo, FiCopy } from "react-icons/fi";
+import { useState } from "react";
 
 export default function LandingPage() {
   const authed = Boolean(Cookies.get("token"));
+  const navigate = useNavigate();
+  const [msg, setMsg] = useState(null);
+
+  const handleGoogleSuccess = async (credentialResponse) => {
+    setMsg(null);
+    try {
+      await api.post("/auth/google", {
+        credential: credentialResponse.credential,
+      });
+      navigate("/use", { replace: true });
+    } catch (err) {
+      const message = err?.response?.data?.message || "Google login failed";
+      setMsg(message);
+    }
+  };
+
+  const handleGoogleError = () => setMsg("Google login cancelled or failed");
 
   return (
     <main className='bg-neo-cream'>
@@ -26,22 +46,24 @@ export default function LandingPage() {
               the perfect caption. No more staring at a blank text box.
             </p>
             <div className='flex flex-wrap gap-3'>
-              <Link
-                to={authed ? "/use" : "/auth"}
-                className='neo-btn neo-btn-primary text-lg no-underline'
-              >
-                <span className='flex items-center gap-2'>
-                  <FiZap size={18} />
-                  {authed ? "Create Caption" : "Get Started Free"}
-                </span>
-              </Link>
-              {!authed && (
+              {authed ? (
                 <Link
-                  to='/auth'
-                  className='neo-btn bg-neo-white text-neo-black text-lg no-underline'
+                  to='/use'
+                  className='neo-btn neo-btn-primary text-lg no-underline'
                 >
-                  Login →
+                  <span className='flex items-center gap-2'>
+                    <FiZap size={18} />
+                    Create Caption
+                  </span>
                 </Link>
+              ) : (
+                <div className='flex items-center gap-3'>
+                  <GoogleLogin
+                    onSuccess={handleGoogleSuccess}
+                    onError={handleGoogleError}
+                  />
+                  <span className='text-sm text-neo-black/60'>{msg}</span>
+                </div>
               )}
             </div>
           </div>
@@ -158,12 +180,19 @@ export default function LandingPage() {
 
           {/* CTA */}
           <div className='mt-12'>
-            <Link
-              to={authed ? "/use" : "/auth"}
-              className='neo-btn neo-btn-dark text-lg no-underline'
-            >
-              Start creating captions →
-            </Link>
+            {authed ? (
+              <Link
+                to='/use'
+                className='neo-btn neo-btn-dark text-lg no-underline'
+              >
+                Start creating captions →
+              </Link>
+            ) : (
+              <GoogleLogin
+                onSuccess={handleGoogleSuccess}
+                onError={handleGoogleError}
+              />
+            )}
           </div>
         </div>
       </section>

@@ -35,7 +35,7 @@ export default function UsePage() {
 
     try {
       const fd = new FormData();
-      fd.append("media", file);
+      fd.append("image", file);
 
       // attach options to FormData
       Object.entries(options).forEach(([key, value]) => {

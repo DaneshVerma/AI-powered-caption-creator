@@ -1,5 +1,8 @@
 const userModel = require("../models/user.model");
 const jwt = require("jsonwebtoken");
+const { OAuth2Client } = require("google-auth-library");
+
+const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID || process.env.VITE_GOOGLE_CLIENT_ID);
 
 const registerController = async (req, res) => {
   const { username, email, password } = req.body;
@@ -55,7 +58,30 @@ const loginController = async (req, res) => {
   });
 };
 
+const googleController = async (req, res) => {
+  const { credential } = req.body;
+  if (!credential) return res.status(400).json({ message: "missing credential" });
+
+  try {
+    const ticket = await googleClient.verifyIdToken({ idToken: credential });
+    const payload = ticket.getPayload();
+    const email = payload.email;
+    const name = payload.name || email.split("@")[0];
+    // find or create user based on email
+    let user = await userModel.findOne({ email });
+    if (!user) {
+      user = await userModel.create({ username: name, email });
+    }
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET || "jwt-secret");
+    res.cookie("token", token, { httpOnly: true });
+    return res.json({ message: "logged in with google" });
+  } catch (err) {
+    return res.status(401).json({ message: "invalid google credential", error: err.message });
+  }
+};
+
 module.exports = {
   registerController,
   loginController,
+  googleController,
 };

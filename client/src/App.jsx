@@ -1,8 +1,6 @@
 import { Link, Route, Routes } from "react-router";
-import AuthPage from "./pages/AuthPage";
 import UsePage from "./pages/UsePage";
 import LandingPage from "./pages/LandingPage";
-import Protected from "./components/Protected";
 import Navbar from "./components/Navbar";
 import { FiGithub } from "react-icons/fi";
 
@@ -13,15 +11,8 @@ const App = () => {
       <div className='flex-1'>
         <Routes>
           <Route path='/' element={<LandingPage />} />
-          <Route path='/auth' element={<AuthPage />} />
-          <Route
-            path='/use'
-            element={
-              <Protected>
-                <UsePage />
-              </Protected>
-            }
-          />
+
+          <Route path='/use' element={<UsePage />} />
         </Routes>
       </div>
       <footer className='border-t-[2.5px] border-neo-black bg-neo-yellow'>
