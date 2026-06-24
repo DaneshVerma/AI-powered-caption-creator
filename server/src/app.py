@@ -1,11 +1,12 @@
 from fastapi import FastAPI
 from src.routes.captionRoute import router as caption_router
+from src.core.handlers import register_exception_handlers
+
 app = FastAPI()
 
-app.include_router(caption_router, prefix="/api")
+register_exception_handlers(app)
 
-
-@app.get("/api")
-async def read_root():
-    return {"Hello": "World"}
-
+app.include_router(
+    caption_router,
+    prefix="/api",
+)

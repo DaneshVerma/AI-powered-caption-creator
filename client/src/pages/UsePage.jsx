@@ -42,7 +42,7 @@ export default function UsePage() {
         fd.append(key, value);
       });
 
-      const { data } = await api.post("/api", fd, {
+      const { data } = await api.post("/api/generate", fd, {
         headers: { "Content-Type": "multipart/form-data" },
       });
 

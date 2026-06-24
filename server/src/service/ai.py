@@ -1,5 +1,8 @@
 from google import genai
+from fastapi import HTTPException
+from google.genai import types, errors
 from src.core.config import settings
+from src.core.exceptions import GeminiServiceError
 
 
 class AiService:
@@ -9,37 +12,56 @@ class AiService:
     def generate_caption(
         self,
         image_bytes: bytes,
-        tone,
-        mood,
-        language,
+        tone: str,
+        mood: str,
+        language: str,
         mime_type: str,
     ) -> str:
 
         prompt = f"""
-        Analyze the image and generate a social media caption.
+        Analyze this image and generate an engaging social media caption.
 
-        Tone: {tone}
-        Mood: {mood}
-        Language: {language}
-
-        Return only the caption.
+        Requirements:
+        - Tone: {tone}
+        - Mood: {mood}
+        - Language: {language}
+        - Maximum 100 words
+        - Return only the caption text
         """
 
-        response = self.client.models.generate_content(
-            model="gemini-2.5-flash",
-            contents=[
-                prompt,
-                genai.types.Part.from_bytes(
-                    data=image_bytes,
-                    mime_type=mime_type,
-                ),
-            ],
-        )
+        try:
+            response = self.client.models.generate_content(
+                model="gemini-2.5-flash",
+                contents=[
+                    prompt,
+                    types.Part.from_bytes(
+                        data=image_bytes,
+                        mime_type=mime_type,
+                    ),
+                ],
+            )
+            if not response.text:
+                raise GeminiServiceError(
+                    message="Gemini returned empty response", status_code=506
+                )
 
-        if response.text is None:
-            raise ValueError("No caption generated")
+            return response.text.strip()
 
-        return response.text
+        except errors.ClientError:
+            raise GeminiServiceError(
+                message="AI connection Faild with Gemini",
+                status_code=502,
+            )
+        except errors.ServerError:
+            raise GeminiServiceError(
+                message="Failed to communicate with Gemini",
+                status_code=501,
+            )
+        except errors.APIError:
+            raise GeminiServiceError(
+                message="AI API faild",
+                status_code=504,
+            )
 
 
 ai = AiService()
