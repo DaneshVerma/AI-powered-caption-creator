@@ -90,16 +90,16 @@ const UploadCard = ({
             }
             className='neo-select'
           >
-            <option value='Hinglish'>Hinglish</option>
-            <option value='English'>English</option>
-            <option value='Hindi'>Hindi</option>
-            <option value='Urdu'>Urdu</option>
-            <option value='Punjabi'>Punjabi</option>
-            <option value='Bangla'>Bangla</option>
-            <option value='Tamil'>Tamil</option>
-            <option value='Telugu'>Telugu</option>
-            <option value='Gujarati'>Gujarati</option>
-            <option value='Marathi'>Marathi</option>
+              <option value='Hinglish'>Hinglish</option>
+              <option value='English'>English</option>
+              <option value='Hindi'>Hindi</option>
+              <option value='Urdu'>Urdu</option>
+              <option value='Punjabi'>Punjabi</option>
+              <option value='Bangla'>Bangla</option>
+              <option value='Tamil'>Tamil</option>
+              <option value='Telugu'>Telugu</option>
+              <option value='Gujarati'>Gujarati</option>
+              <option value='Marathi'>Marathi</option>
           </select>
         </div>
 
