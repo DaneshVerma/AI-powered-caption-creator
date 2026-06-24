@@ -46,9 +46,3 @@ class Mood(str, Enum):
     Witty = "witty"
     Storytelling = "storytelling"
     Informative = "informative"
-
-
-class CaptionRequest(BaseModel):
-    tone: Tone
-    language: Language
-    mood: Mood

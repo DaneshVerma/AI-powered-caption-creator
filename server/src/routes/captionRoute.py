@@ -1,18 +1,28 @@
-from fastapi import APIRouter
-from src.schemas.caption import CaptionRequest
-
-router = APIRouter()
+from fastapi import APIRouter, UploadFile, File, Form
+from src.service.ai import ai
+from src.schemas.caption import Tone, Language, Mood
 
 router = APIRouter()
 
 
 @router.post("/generate")
-async def generate_caption(payload: CaptionRequest):
-    print(f"Received request: {payload}")
+async def generate_caption(
+    image: UploadFile = File(...),
+    tone: Tone = Form(...),
+    language: Language = Form(...),
+    mood: Mood = Form(...),
+):
+    image_content = await image.read()
+
+    caption = ai.generate_caption(
+        image_bytes=image_content,
+        tone=tone,
+        mood=mood,
+        language=language,
+        mime_type=image.content_type or "image/jpg",
+    )
 
     return {
-        "status": "success",
-        "data": {
-            "caption": f"Generated caption for the uploaded image with tone '{payload.tone}', language '{payload.language}', and mood '{payload.mood}'."
-        },
+        "success": True,
+        "caption": caption,
     }

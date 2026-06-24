@@ -5,6 +5,7 @@ app = FastAPI()
 app.include_router(caption_router, prefix="/api")
 
 
-@app.get("/")
+@app.get("/api")
 async def read_root():
     return {"Hello": "World"}
+
