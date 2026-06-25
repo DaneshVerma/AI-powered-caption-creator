@@ -20,41 +20,13 @@ export default function Navbar() {
 
   return (
     <header className='border-b-[2.5px] border-neo-black bg-neo-white sticky top-0 z-50'>
-      <nav className='mx-auto max-w-5xl px-4 h-16 flex items-center justify-between'>
+      <nav className='mx-auto max-w-5xl px-4 h-16 flex items-center justify-center'>
         <Link to='/' className='flex items-center gap-2 no-underline'>
           <span className='neo-badge bg-neo-yellow text-neo-black text-base px-3 py-1 flex items-center gap-1'>
             <FiZap size={16} className='inline' />
             captionair
           </span>
         </Link>
-
-        <div className='flex items-center gap-3'>
-          {authed ? (
-            <>
-              <Link
-                to='/use'
-                className='neo-btn neo-btn-sm bg-neo-cyan text-neo-black no-underline'
-              >
-                Create
-              </Link>
-              <button
-                onClick={handleLogout}
-                className='neo-btn neo-btn-sm neo-btn-dark flex items-center gap-1.5'
-              >
-                <FiLogOut size={13} />
-                Logout
-              </button>
-            </>
-          ) : (
-            <Link
-              to='/'
-              className='neo-btn neo-btn-sm neo-btn-primary flex items-center gap-1.5 no-underline'
-            >
-              <FiLogIn size={13} />
-              Login
-            </Link>
-          )}
-        </div>
       </nav>
     </header>
   );

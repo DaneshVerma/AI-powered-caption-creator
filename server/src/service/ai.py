@@ -47,14 +47,15 @@ class AiService:
 
             return response.text.strip()
 
-        except errors.ClientError:
+        except errors.ClientError as e:
+            print(e.message)
             raise GeminiServiceError(
-                message="AI connection Faild with Gemini",
+                message="AI connection Faild Try after Some time",
                 status_code=502,
             )
         except errors.ServerError:
             raise GeminiServiceError(
-                message="Failed to communicate with Gemini",
+                message="Failed to communicate with Ai",
                 status_code=501,
             )
         except errors.APIError:
