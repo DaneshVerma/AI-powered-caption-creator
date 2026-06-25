@@ -4,7 +4,7 @@ import axios from "axios";
 // use a relative base URL so requests go to the same origin.
 // `withCredentials: true` ensures the browser sends/receives cookies.
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE || ".",
+  baseURL: import.meta.env.VITE_API_BASE || "/api",
   withCredentials: true,
 });
 
