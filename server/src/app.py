@@ -30,5 +30,5 @@ app.mount(
 
 @app.get("/{path:path}")
 async def spa(path:str):
-    return FileResponse("dist/index.html")
+    return FileResponse("public/index.html")
 
