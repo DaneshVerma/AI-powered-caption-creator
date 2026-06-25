@@ -1,6 +1,6 @@
 from fastapi import FastAPI, staticfiles
 from fastapi.responses import FileResponse
-from src.routes.captionRoute import router as caption_router
+from src.routes.router import router
 from src.core.handlers import register_exception_handlers
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -17,10 +17,7 @@ app.add_middleware(
 )
 register_exception_handlers(app)
 
-app.include_router(
-    caption_router,
-    prefix="/api",
-)
+app.include_router(router, prefix="/api")
 
 app.mount(
     "/assets",
@@ -28,7 +25,7 @@ app.mount(
     name="assets",
 )
 
-@app.get("/{path:path}")
-async def spa(path:str):
-    return FileResponse("public/index.html")
 
+@app.get("/{path:path}")
+async def spa(path: str):
+    return FileResponse("public/index.html")
