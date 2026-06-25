@@ -24,7 +24,7 @@ app.include_router(
 
 app.mount(
     "/assets",
-    staticfiles.StaticFiles(directory="dist/assets"),
+    staticfiles.StaticFiles(directory="public/assets"),
     name="assets",
 )
 
