@@ -23,4 +23,4 @@ pip install uv
 echo "Installing Python dependencies..."
 
 cd ../server
-uv sync --frozen
+uv sync --frozen --active
