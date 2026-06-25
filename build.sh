@@ -15,6 +15,11 @@ mkdir -p ../server/public
 cp -r dist/assets ../server/public/
 cp dist/index.html ../server/public/
 
+echo "Installing uv..."
+
+python -m pip install --upgrade pip
+pip install uv
+
 echo "Installing Python dependencies..."
 
 cd ../server
