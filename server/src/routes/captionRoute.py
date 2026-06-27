@@ -1,6 +1,6 @@
-from fastapi import APIRouter, UploadFile, File, Form
+from fastapi import APIRouter, UploadFile, File, Form, Depends
 from src.service.ai import ai
-from src.schemas.caption import Tone, Language, Mood
+from src.schemas.caption import CaptionOptions
 from src.core.logger import logger
 
 router = APIRouter()
@@ -9,21 +9,13 @@ router = APIRouter()
 @router.post("/generate")
 async def generate_caption(
     image: UploadFile = File(...),
-    tone: Tone = Form(...),
-    language: Language = Form(...),
-    mood: Mood = Form(...),
-    hashtags: bool = Form(...),
-    emojis: bool = Form(...),
+    options: CaptionOptions = Depends(CaptionOptions.as_form),
 ):
     image_content = await image.read()
-    logger.info(image.content_type)
+    
     caption = ai.generate_caption(
         image_bytes=image_content,
-        tone=tone,
-        mood=mood,
-        language=language,
-        hashtags=hashtags,
-        emojis=emojis,
+        options=options,
         mime_type=image.content_type or "image/jpg",
     )
 

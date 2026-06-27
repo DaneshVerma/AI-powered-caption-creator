@@ -1,6 +1,8 @@
 from enum import Enum
-from pydantic import BaseModel
+from typing import Annotated
 
+from fastapi import Form
+from pydantic import BaseModel
 
 class Language(str, Enum):
     HINGLISH = "hinglish"
@@ -46,3 +48,29 @@ class Mood(str, Enum):
     Witty = "witty"
     Storytelling = "storytelling"
     Informative = "informative"
+
+
+# Request model
+class CaptionOptions(BaseModel):
+    tone: Tone
+    language: Language
+    mood: Mood
+    hashtags: bool
+    emojis: bool
+
+    @classmethod
+    def as_form(
+        cls,
+        tone: Annotated[Tone, Form(...)],
+        language: Annotated[Language, Form(...)],
+        mood: Annotated[Mood, Form(...)],
+        hashtags: Annotated[bool, Form(...)],
+        emojis: Annotated[bool, Form(...)],
+    ):
+        return cls(
+            tone=tone,
+            language=language,
+            mood=mood,
+            hashtags=hashtags,
+            emojis=emojis,
+        )

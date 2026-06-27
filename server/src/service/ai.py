@@ -3,6 +3,7 @@ from fastapi import HTTPException
 from google.genai import types, errors
 from src.core.config import settings
 from src.core.exceptions import GeminiServiceError
+from src.schemas.caption import CaptionOptions
 
 
 class AiService:
@@ -10,25 +11,18 @@ class AiService:
         self.client = genai.Client(api_key=settings.GEMINI_API_KEY)
 
     def generate_caption(
-        self,
-        image_bytes: bytes,
-        tone: str,
-        mood: str,
-        language: str,
-        mime_type: str,
-        hashtags: bool,
-        emojis: bool,
+        self, image_bytes: bytes, options: CaptionOptions, mime_type: str
     ) -> str:
 
         prompt = f"""
         Analyze this image and generate an engaging social media caption.
 
         Requirements:
-        - Tone: {tone}
-        - Mood: {mood}
-        - Language: {language}
-        - Emoji: {emojis}
-        _ Hastag : {hashtags}
+        - Tone: {options.tone}
+        - Mood: {options.mood}
+        - Language: {options.language}
+        - Emoji: {options.emojis}
+        _ Hastag : {options.hashtags}
         - Maximum 25 words
         - Return only the caption text
         """
