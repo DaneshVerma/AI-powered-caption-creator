@@ -9,8 +9,11 @@ db = client[settings.DB_NAME]
 
 
 async def init_db():
-    await init_beanie(
-        database=db,
-        document_models=[User],
-    )
-    logger.info("MongoDB connected successfully")
+    try:
+        await init_beanie(
+            database=db,
+            document_models=[User],
+        )
+        logger.info("MongoDB connected successfully")
+    except Exception as e:
+        logger.error(str(e))
