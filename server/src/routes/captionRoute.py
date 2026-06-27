@@ -2,10 +2,10 @@ from fastapi import APIRouter, UploadFile, File, Form
 from src.service.ai import ai
 from src.schemas.caption import Tone, Language, Mood
 
-routes = APIRouter()
+router = APIRouter()
 
 
-@routes.post("/generate")
+@router.post("/generate")
 async def generate_caption(
     image: UploadFile = File(...),
     tone: Tone = Form(...),

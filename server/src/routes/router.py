@@ -1,6 +1,6 @@
 from fastapi import APIRouter
-from src.routes.authRoute import routes as auth_routes
-from src.routes.captionRoute import routes as caption_routes
+from src.routes.authRoute import router as auth_routes
+from src.routes.captionRoute import router as caption_routes
 
 router = APIRouter()
 

@@ -3,8 +3,15 @@ from fastapi.responses import FileResponse
 from src.routes.router import router
 from src.core.handlers import register_exception_handlers
 from fastapi.middleware.cors import CORSMiddleware
+from contextlib import asynccontextmanager
+from src.db.db import init_db
 
-app = FastAPI()
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    await init_db()
+    yield
+
+app = FastAPI(lifespan=lifespan)
 
 origins = ["*"]
 
