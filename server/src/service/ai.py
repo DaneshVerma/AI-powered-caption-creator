@@ -16,6 +16,8 @@ class AiService:
         mood: str,
         language: str,
         mime_type: str,
+        hashtags: bool,
+        emojis: bool,
     ) -> str:
 
         prompt = f"""
@@ -25,7 +27,9 @@ class AiService:
         - Tone: {tone}
         - Mood: {mood}
         - Language: {language}
-        - Maximum 100 words
+        - Emoji: {emojis}
+        _ Hastag : {hashtags}
+        - Maximum 25 words
         - Return only the caption text
         """
 
